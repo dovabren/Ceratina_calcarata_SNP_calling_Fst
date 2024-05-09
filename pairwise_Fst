@@ -1,0 +1,50 @@
+#pop1_apr2.txt
+cSoc_01 social
+cSoc_02 social
+cSoc_03 social
+cSoc_04 social
+cSoc_05 social
+cSoc_06 social
+cSoc_07 social
+cSoc_08 social
+cSoc_09 social
+cSoc_10 social
+
+#pop2_apr2.txt
+cSol_01 solitary
+cSol_02 solitary
+cSol_03 solitary
+cSol_04 solitary
+cSol_05 solitary
+cSol_06 solitary
+cSol_07 solitary
+cSol_08 solitary
+cSol_09 solitary
+cSol_10 solitary
+
+
+#use vcf tools with 
+############ filter for coverage (missing data max 25%) ###########
+
+
+
+#vcftools --vcf Soc_Sol_filter_3_025.vcf --max-missing 0.25 --recode --out Soc_Sol_filter_3_025_output_filtered_missing
+
+#may 2 2023 is not #
+vcftools --vcf calc_and_other_ceratina_filter3.vcf --max-missing 0.25 --recode --out calc_and_other_ceratina_filter3_output_filtered_missing
+
+############ impute missing genotypes- APRIL 3 #################
+
+
+#java -Xmx4g -jar beagle.18May20.d20.jar gt=calc_and_other_ceratina_filter3_output_filtered_missing.recode.vcf out=calc_and_other_ceratina_filter3_output_filtered_missing_imputed.vcf
+
+
+#java -Xmx4g -jar beagle.18May20.d20.jar gt=Soc_Sol_filter_3_025_output_filtered_missing.recode.vcf out=Soc_Sol_filter_3_025_imputed.vcf
+
+#################### VCFtools ###############
+#gunzip Soc_Sol_filter_3_025_imputed.vcf.vcg.gz
+
+
+#gunzip calc_and_other_ceratina_filter3_output_filtered_missing_imputed.vcf.vcf.gz
+
+#vcftools --vcf calc_and_other_ceratina_filter3_output_filtered_missing_imputed.vcf.vcf --weir-fst-pop pop1_apr2.txt --weir-fst-pop pop2_apr2.txt --out calc_and_other_ceratina_MAY2_VCFTOOLS_fst
